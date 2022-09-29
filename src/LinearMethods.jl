@@ -1,5 +1,3 @@
-using Printf;
-
 abstract type LinearMethod end
 
 mutable struct Golden <: LinearMethod
@@ -80,21 +78,4 @@ function Minimize!(M::Secant, ϵ::Float64=1e-5)
 
     return xk;
 end
-
-
-f   = (x) -> x^4 - 14x^3 + 60x^2 - 70x;
-∇f  = (x) -> 4x^3 - 14*3*x^2 + 120x - 70;
-∇²f = (x) -> 12x^2 - 14*6*x + 120;
-
-m = Minimize!(Golden(f, -10, 10));
-@printf("Golden Minima    = %10.8f\n", m);
-
-m = Minimize!(BiSection(∇f, -10, 10));
-@printf("BiSection Minima = %10.8f\n", m);
-
-m = Minimize!(Newton(∇f, ∇²f, -0.8));
-@printf("Newton Minima    = %10.8f\n", m);
-
-m = Minimize!(Secant(∇f, -1.0, 0.9));
-@printf("Secant Minima    = %10.8f\n", m);
 
