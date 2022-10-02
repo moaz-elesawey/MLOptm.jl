@@ -8,6 +8,8 @@ export BiSection
 export Newton
 export Secant
 
+export GradientDescent
+export ConjugateDescent
 export SteepestDescent
 export NewtonND
 
