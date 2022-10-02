@@ -12,6 +12,7 @@ export GradientDescent
 export ConjugateDescent
 export SteepestDescent
 export NewtonND
+export Momentum
 
 export Minimize!
 

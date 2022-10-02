@@ -14,7 +14,7 @@ function Minimize!(G::GradientDescent, x0, ϵ=1e-7; maxiters=10)
     xk = x0 - α*∇f(x0...);
     for i in 1:maxiters
         xk = x0 - α*∇f(x0...);
-        err = norm(xk - x0) / norm(x0);
+        err = norm(xk - x0) / max(1, norm(x0));
         if err < ϵ break end
         x0 = xk;
     end
@@ -42,7 +42,7 @@ function Minimize!(G::ConjugateDescent, x0, ϵ=1e-7; maxiters=10)
         Φ(α) =f((x0 - α*gk)...);
         α = Minimize!(Golden(Φ, 0, 1));
         xk = x0 - α*gk;
-        err = norm(xk - x0) / norm(x0);
+        err = norm(xk - x0) / max(1, norm(x0));
         if err < ϵ break end
         x0 = xk;
     end
@@ -94,4 +94,28 @@ function Minimize!(G::NewtonND, x0, ϵ=1e-5; maxiters=10)
     return xk;
 end
 
+
+########## Momentum Methods ##########
+
+mutable struct Momentum <: GradientMethod
+    ∇f
+    α
+    β
+end
+function Minimize!(G::Momentum, x0, ϵ=1e-7; maxiters=10)
+    ∇f, α, β = G.∇f, G.α, G.β;
+
+    v0 = zeros(length(x0));
+    vk = β*v0 - α*∇f(x0...);
+    xk = x0 + vk
+
+    for i in 1:maxiters
+        vk = β*v0 - α*∇f(x0...);
+        xk = x0 + vk;
+        err = norm(xk - x0) / max(1, norm(x0));
+        v0 = vk; x0 = xk;
+    end
+
+    return xk;
+end
 
