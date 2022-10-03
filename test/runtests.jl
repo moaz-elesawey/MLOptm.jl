@@ -17,11 +17,12 @@ using Test
     H(x, y)  = [2 0; 0 2];
     x0 = [10; 10]
 
-    @test isapprox(Minimize!(GradientDescent(∇f, 0.1), x0) , [1.0, 1.0]; atol=1e-1, rtol=1);
-    @test isapprox(Minimize!(ConjugateDescent(f, ∇f), x0)  , [0.0, 0.0]; atol=1e-4, rtol=0);
-    @test isapprox(Minimize!(SteepestDescent(f, ∇f), x0)   , [0.0, 0.0]; atol=1e-4, rtol=0);
-    @test isapprox(Minimize!(NewtonND(∇f, H), x0)          , [0.0, 0.0]; atol=1e-4, rtol=0);
-    @test isapprox(Minimize!(Momentum(∇f, 0.1, 0.1), x0)   , [1.0, 1.0]; atol=1e-1, rtol=1);
+    @test isapprox(Minimize!(GradientDescent(∇f, 0.1), x0)      , [1.0, 1.0]; atol=1e-1, rtol=1);
+    @test isapprox(Minimize!(ConjugateDescent(f, ∇f), x0)       , [0.0, 0.0]; atol=1e-4, rtol=0);
+    @test isapprox(Minimize!(SteepestDescent(f, ∇f), x0)        , [0.0, 0.0]; atol=1e-4, rtol=0);
+    @test isapprox(Minimize!(NewtonND(∇f, H), x0)               , [0.0, 0.0]; atol=1e-4, rtol=0);
+    @test isapprox(Minimize!(Momentum(∇f, 0.1, 0.1), x0)        , [1.0, 1.0]; atol=1e-1, rtol=1);
+    @test isapprox(Minimize!(NestrovMomentum(∇f, 0.1, 0.1), x0) , [1.0, 1.0]; atol=1e-1, rtol=1);
 
 end
 
