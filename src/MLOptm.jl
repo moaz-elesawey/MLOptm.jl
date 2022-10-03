@@ -13,6 +13,9 @@ export ConjugateDescent
 export SteepestDescent
 export NewtonND
 export Momentum
+export NestrovMomentum
+export AdaGrad
+export RMSProp
 
 export Minimize!
 
